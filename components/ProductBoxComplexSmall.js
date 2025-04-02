@@ -113,32 +113,47 @@ const ProductBoxComplexSmall = ({
             <p className={classes.unavailabletext}>Trenutno nije dostupno</p>
           </div>
         )}
-        <div className={classes.price}>
-          {!product?.price?.discount?.active && (
-            <p className={classes["no-old-price"]} />
-          )}
-          {product?.price?.discount?.active && (
-            <p className={classes["old-price"]}>
-              {currencyFormat(
-                product?.price?.price?.original,
-                product?.price?.currency
-              )}
-            </p>
-          )}
-          <p className={classes["new-price"]}>
-            {currencyFormat(
-              product?.price?.discount?.active
-                ? product?.price?.price?.discount
-                : product?.price?.price?.original,
-              product?.price?.currency
-            )}
-          </p>
-        </div>
-        {product?.price?.discount?.active && (
-          <div className={classes.discount}>
-            <span>{product?.price?.discount?.amount}</span>
-          </div>
-        )}
+     <div className={classes.price}>
+  {!product?.price?.discount?.active && (
+    <p className={classes["no-old-price"]} />
+  )}
+  {product?.price?.discount?.active && product?.price?.price?.original > 0 && (
+    <p className={classes["old-price"]}>
+      {currencyFormat(
+        product?.price?.price?.original,
+        product?.price?.currency
+      )}
+    </p>
+  )}
+  <p className={classes["new-price"]}>
+    {currencyFormat(
+      product?.price?.discount?.active
+        ? product?.price?.price?.discount
+        : product?.price?.price?.original,
+      product?.price?.currency
+    )}
+  </p>
+</div>
+
+{product?.price?.discount?.active && product?.price?.price?.original > 0 && (
+  <div className={classes.discount}>
+    <span>
+      {product.price.price.discount < product.price.price.original
+        ? `-${Math.round(
+            ((product.price.price.original -
+              product.price.price.discount) /
+              product.price.price.original) *
+              100
+          )}%`
+        : `+${Math.round(
+            ((product.price.price.discount - product.price.price.original) /
+              product.price.price.original) *
+              100
+          )}%`}
+    </span>
+  </div>
+)}
+
 
         {(productImage?.stickers ?? []).map((sticker) => (
           <div className={classes["top-deal"]} key={sticker.slug}>

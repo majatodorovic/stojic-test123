@@ -107,24 +107,44 @@ const ProductDetails = ({
             </li>
           </ul>
 
-          <ul className={`${classes["price-list"]}`}>
-            <li className={`${classes["old-price"]}`}>
-              {currencyFormat(
-                productData?.price?.discount?.active
-                  ? productData?.price?.price?.original
-                  : null,
-                productData?.price?.currency
+          <ul className={classes["price-list"]}>
+            {/* Prikazivanje stare cene samo ako je popust aktivan i originalna cena postoji */}
+            {productData?.price?.discount?.active &&
+              productData?.price?.price?.original > 0 && (
+                <li className={classes["old-price"]}>
+                  {currencyFormat(
+                    productData?.price?.price?.original,
+                    productData?.price?.currency
+                  )}
+                </li>
               )}
-            </li>
-            <li className={`${classes.price}`}>
+
+            {/* Prikazivanje nove cene, ili originalne cene ako popust nije aktivan */}
+            <li className={classes.price}>
               {currencyFormat(
                 productData?.price?.discount?.active
                   ? productData?.price?.price?.discount
                   : productData?.price?.price?.original,
                 productData?.price?.currency
               )}
+
+              {/* Prikazivanje procenta popusta samo ako je popust aktivan */}
+              {productData?.price?.discount?.active &&
+                productData?.price?.price?.original > 0 && (
+                  <span className={classes.discount}>
+                    {" ("}-
+                    {Math.round(
+                      ((productData.price.price.original -
+                        productData.price.price.discount) /
+                        productData.price.price.original) *
+                        100
+                    )}
+                    % {")"}
+                  </span>
+                )}
             </li>
           </ul>
+
           {Number(productData?.inventory?.amount) > 0 && (
             <div className=" d-flex align-items-center">
               <div className={`${classes["button-quantity-holder"]}`}>

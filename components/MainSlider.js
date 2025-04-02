@@ -6,12 +6,11 @@ import classes from "./MainSlider.module.scss";
 const MainSlider = ({ banners, mobileBanners }) => (
   <>
     <div className="mobile-hidden">
-      <Carousel>
+      <Carousel interval={3000}>
         {(banners ?? []).map((banner) => (
           <Carousel.Item
             className={`${classes["main-slider"]}`}
             key={banner.id}
-            interval={3000}
           >
             {banner?.file_data?.type === "video" ? (
               <video
@@ -69,12 +68,11 @@ const MainSlider = ({ banners, mobileBanners }) => (
     </div>
 
     <div className="desktop-hidden">
-      <Carousel>
+      <Carousel interval={3000}>
         {(mobileBanners ?? []).map((banner) => (
           <Carousel.Item
             className={`${classes["main-slider"]}`}
             key={banner.id}
-            interval={3000}
           >
             {banner?.file_data?.type === "video" ? (
               <video
