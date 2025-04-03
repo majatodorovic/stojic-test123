@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/legacy/image";
 import classes from "./ProductDetails.module.scss";
@@ -144,9 +145,9 @@ const ProductDetails = ({
                 )}
             </li>
           </ul>
-
-          {Number(productData?.inventory?.amount) > 0 && (
-            <div className=" d-flex align-items-center">
+          {Number(productData?.inventory?.amount) > 0 ? (
+            // Ako je proizvod dostupan
+            <div className="d-flex align-items-center">
               <div className={`${classes["button-quantity-holder"]}`}>
                 <div className={`${classes["button-quantity"]}`}>
                   <PlusMinusInput
@@ -179,11 +180,29 @@ const ProductDetails = ({
                       <FontAwesomeIcon
                         icon={faCartShopping}
                         style={{ color: "#fff" }}
-                      />{" "}
+                      />
                     </div>
                     Dodaj u korpu
                   </button>
                 )}
+              </div>
+            </div>
+          ) : (
+            // Ako proizvod NEMA dostupnu količinu
+            <div className="d-flex ">
+              <div className={`${classes["button-add-to-cart-holdero"]}`}>
+                <a
+                  href={`/kontakt?id=${productData?.id}&&name=${productData?.basic_data?.name}`}
+                  className={classes.button} // Koristi istu klasu kao dugme
+                >
+                  <div className={`${classes["img-holder"]}`}>
+                    <FontAwesomeIcon
+                      icon={faEnvelope}
+                      style={{ color: "white" }}
+                    />
+                  </div>
+                  <p style={{ whiteSpace: "nowrap" }}>Proverite dostupnost</p>
+                </a>
               </div>
             </div>
           )}

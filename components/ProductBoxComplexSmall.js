@@ -1,6 +1,7 @@
 import Image from "next/legacy/image";
 import { useState, useEffect } from "react";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classes from "./ProductBoxComplexSmall.module.scss";
 import { currencyFormat } from "../helpers/functions";
@@ -113,47 +114,49 @@ const ProductBoxComplexSmall = ({
             <p className={classes.unavailabletext}>Trenutno nije dostupno</p>
           </div>
         )}
-     <div className={classes.price}>
-  {!product?.price?.discount?.active && (
-    <p className={classes["no-old-price"]} />
-  )}
-  {product?.price?.discount?.active && product?.price?.price?.original > 0 && (
-    <p className={classes["old-price"]}>
-      {currencyFormat(
-        product?.price?.price?.original,
-        product?.price?.currency
-      )}
-    </p>
-  )}
-  <p className={classes["new-price"]}>
-    {currencyFormat(
-      product?.price?.discount?.active
-        ? product?.price?.price?.discount
-        : product?.price?.price?.original,
-      product?.price?.currency
-    )}
-  </p>
-</div>
+        <div className={classes.price}>
+          {!product?.price?.discount?.active && (
+            <p className={classes["no-old-price"]} />
+          )}
+          {product?.price?.discount?.active &&
+            product?.price?.price?.original > 0 && (
+              <p className={classes["old-price"]}>
+                {currencyFormat(
+                  product?.price?.price?.original,
+                  product?.price?.currency
+                )}
+              </p>
+            )}
+          <p className={classes["new-price"]}>
+            {currencyFormat(
+              product?.price?.discount?.active
+                ? product?.price?.price?.discount
+                : product?.price?.price?.original,
+              product?.price?.currency
+            )}
+          </p>
+        </div>
 
-{product?.price?.discount?.active && product?.price?.price?.original > 0 && (
-  <div className={classes.discount}>
-    <span>
-      {product.price.price.discount < product.price.price.original
-        ? `-${Math.round(
-            ((product.price.price.original -
-              product.price.price.discount) /
-              product.price.price.original) *
-              100
-          )}%`
-        : `+${Math.round(
-            ((product.price.price.discount - product.price.price.original) /
-              product.price.price.original) *
-              100
-          )}%`}
-    </span>
-  </div>
-)}
-
+        {product?.price?.discount?.active &&
+          product?.price?.price?.original > 0 && (
+            <div className={classes.discount}>
+              <span>
+                {product.price.price.discount < product.price.price.original
+                  ? `-${Math.round(
+                      ((product.price.price.original -
+                        product.price.price.discount) /
+                        product.price.price.original) *
+                        100
+                    )}%`
+                  : `+${Math.round(
+                      ((product.price.price.discount -
+                        product.price.price.original) /
+                        product.price.price.original) *
+                        100
+                    )}%`}
+              </span>
+            </div>
+          )}
 
         {(productImage?.stickers ?? []).map((sticker) => (
           <div className={classes["top-deal"]} key={sticker.slug}>
@@ -185,11 +188,13 @@ const ProductBoxComplexSmall = ({
           </div>
         </div>
       ) : (
-        <div className={classes.checkAvailability}>
+        <div className={classes["add-to-cartT"]}>
           <a
             href={`/kontakt?id=${product?.id}&&name=${product?.basic_data?.name}`}
           >
-            Proverite dostupnost
+            <div className={classes["add-to-cart-imagel"]}>
+              <FontAwesomeIcon icon={faEnvelope} color="white" />
+            </div>
           </a>
         </div>
       )}
