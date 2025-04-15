@@ -146,47 +146,69 @@ const ProductDetails = ({
             </li>
           </ul>
           {Number(productData?.inventory?.amount) > 0 ? (
-            // Ako je proizvod dostupan
-            <div className="d-flex align-items-center">
-              <div className={`${classes["button-quantity-holder"]}`}>
-                <div className={`${classes["button-quantity"]}`}>
-                  <PlusMinusInput
-                    className={classes["amount-input"]}
-                    amount={productAmount}
-                    setCount={setProductAmount}
-                  />
-                </div>
-              </div>
-              <div className={`${classes["button-add-to-cart-holder"]}`}>
-                {loading ? (
-                  <button
-                    className={`${classes.button} ${classes["button-loading"]}`}
-                    type="button"
-                  >
-                    <Image
-                      src="/images/loading-buffering.gif"
-                      alt="Loading"
-                      width={200}
-                      height={200}
-                    />
-                  </button>
-                ) : (
-                  <button
-                    onClick={addToCart}
-                    className={classes.button}
-                    type="button"
+            // Ako proizvod ima lager, ali nema cenu
+            productData?.price?.price_defined === false ? (
+              <div className="d-flex">
+                <div className={`${classes["button-add-to-cart-holdero"]}`}>
+                  <a
+                    href={`/kontakt?id=${productData?.id}&&name=${productData?.basic_data?.name}`}
+                    className={classes.button} // Koristi istu klasu kao dugme
                   >
                     <div className={`${classes["img-holder"]}`}>
                       <FontAwesomeIcon
-                        icon={faCartShopping}
-                        style={{ color: "#fff" }}
+                        icon={faEnvelope}
+                        style={{ color: "white" }}
                       />
                     </div>
-                    Dodaj u korpu
-                  </button>
-                )}
+                    <p style={{ whiteSpace: "nowrap" }}>
+                      Proverite dostupnost
+                    </p>
+                  </a>
+                </div>
               </div>
-            </div>
+            ) : (
+              // Ako proizvod ima lager i cenu
+              <div className="d-flex align-items-center">
+                <div className={`${classes["button-quantity-holder"]}`}>
+                  <div className={`${classes["button-quantity"]}`}>
+                    <PlusMinusInput
+                      className={classes["amount-input"]}
+                      amount={productAmount}
+                      setCount={setProductAmount}
+                    />
+                  </div>
+                </div>
+                <div className={`${classes["button-add-to-cart-holder"]}`}>
+                  {loading ? (
+                    <button
+                      className={`${classes.button} ${classes["button-loading"]}`}
+                      type="button"
+                    >
+                      <Image
+                        src="/images/loading-buffering.gif"
+                        alt="Loading"
+                        width={200}
+                        height={200}
+                      />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={addToCart}
+                      className={classes.button}
+                      type="button"
+                    >
+                      <div className={`${classes["img-holder"]}`}>
+                        <FontAwesomeIcon
+                          icon={faCartShopping}
+                          style={{ color: "#fff" }}
+                        />
+                      </div>
+                      Dodaj u korpu
+                    </button>
+                  )}
+                </div>
+              </div>
+            )
           ) : (
             // Ako proizvod NEMA dostupnu količinu
             <div className="d-flex ">
