@@ -93,12 +93,11 @@ const ProductBoxComplexSmall = ({
         {product?.basic_data?.short_description}
       </p>
       <div>
-        {product?.inventory?.inventory_defined &&
-        product?.price?.price_defined ? (
+        {product?.inventory?.inventory_defined ? (
           <div className={classes.inventorystatusholder}>
             <Image
               src={"/icons/available.png"}
-              alt="Dostupno"
+              alt="Stojic elektrik"
               width={16}
               height={16}
             />
@@ -108,14 +107,13 @@ const ProductBoxComplexSmall = ({
           <div className={classes.inventorystatusholder}>
             <Image
               src={"/icons/unavailable.png"}
-              alt="Nije dostupno"
+              alt="AKT"
               width={16}
               height={16}
             />
             <p className={classes.unavailabletext}>Trenutno nije dostupno</p>
           </div>
         )}
-
         <div className={classes.price}>
           {!product?.price?.discount?.active && (
             <p className={classes["no-old-price"]} />
