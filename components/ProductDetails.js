@@ -160,9 +160,7 @@ const ProductDetails = ({
                         style={{ color: "white" }}
                       />
                     </div>
-                    <p style={{ whiteSpace: "nowrap" }}>
-                      Proverite dostupnost
-                    </p>
+                    <p style={{ whiteSpace: "nowrap" }}>Pošaljite upit</p>
                   </a>
                 </div>
               </div>
